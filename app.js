@@ -10,6 +10,12 @@ let msg=document.querySelector('#msg')
 let turnO=true ;  //playerX, PlayerO
 
 
+let clickCount=0;//to track the number of clicks
+
+
+
+
+
 const winPatterns=[
     [0,1,2],[3,4,5],[6,7,8],  //rows
     [0,3,6],[1,4,7],[2,5,8],  //columns
@@ -53,13 +59,21 @@ boxes.forEach((box)=>{
             turnO=true;
         }
         box.disabled=true;
+        clickCount++;
         checkWinner();
+        checkDraw();
+       
         
     })
 })
 
+
+
 const showWinner=(winner)=>{
+    
      msg.innerText=`Congratulations, Winner is ${winner}`;
+      
+    
      msgContainer.classList.remove('hide');
      disableBoxes();
 
@@ -70,7 +84,6 @@ const showWinner=(winner)=>{
 
 const checkWinner=()=>{
     for(let pattern of winPatterns){
-       
       let pos1Value=boxes[pattern[0]].innerText;
       let pos2Value=boxes[pattern[1]].innerText;
       let pos3Value=boxes[pattern[2]].innerText;
@@ -78,6 +91,9 @@ const checkWinner=()=>{
        if(pos1Value !=='' && pos2Value !=='' && pos3Value !==''){
         if(pos1Value === pos2Value && pos2Value === pos3Value){
             showWinner(pos1Value);
+            return;
+          
+           
         }
        }
     
@@ -85,6 +101,17 @@ const checkWinner=()=>{
 
 };
 
+const checkDraw=()=>{
+    if (clickCount === 9) { // If all 9 boxes are filled and no winner
+        msg.innerText = `It's a Draw!`;
+        msgContainer.classList.remove('hide');
+        disableBoxes(); // Disable all boxes after a draw
+    }
+}
+
+
+
+   
 
 newGameBtn.addEventListener('click',resetGame);
 
