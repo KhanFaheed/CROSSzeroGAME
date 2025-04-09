@@ -41,6 +41,7 @@ const resetGame=()=>{
     turnO=true;
     enableBoxes();
     msgContainer.classList.add("hide");
+    clickCount=0;
 
 
 }
@@ -50,12 +51,16 @@ boxes.forEach((box)=>{
     box.addEventListener("click",()=>{
         console.log("box was clicked");
         if(turnO){
+            box.style.color='#b0413e';
            box.innerText='O';
+          
            turnO=false;
 
         }
         else{
+            box.style.color="green";
             box.innerText='X';
+           
             turnO=true;
         }
         box.disabled=true;
@@ -102,7 +107,7 @@ const checkWinner=()=>{
 };
 
 const checkDraw=()=>{
-    if (clickCount === 9) { // If all 9 boxes are filled and no winner
+    if (clickCount == 9) { // If all 9 boxes are filled and no winner
         msg.innerText = `It's a Draw!`;
         msgContainer.classList.remove('hide');
         disableBoxes(); // Disable all boxes after a draw
